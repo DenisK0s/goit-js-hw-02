@@ -27,3 +27,58 @@
 // isLoginValid только проверяет валидный ли логин и возвращает true или false.
 // addLogin добавляет или не добавляет логин в массив.При этом для проверок условия добавления использует результаты
 // вызовов других функций - isLoginUnique и isLoginValid.
+
+const logins = ['Mango', 'robotGoogles', 'Poly', 'Aj4x1sBozz', 'qwerty123'];
+
+const isLoginValid = (login) => {
+  const minLenght = 4;
+  const maxLenght = 16;
+
+  return login.length >= minLenght && login.length <= maxLenght;
+};
+
+const isLoginUnique = (allLogins, login) => {
+  return !allLogins.includes(login);
+};
+
+const addLogin = (allLogins, login) => {
+  const isValid = isLoginValid(login);
+
+  if (!isValid) {
+    return showInvalidMessage();
+  } else {
+    return hadleValidLogin(allLogins, login);
+  } 
+};
+
+const hadleValidLogin = (allLogins, login) => {
+  const isUnique = isLoginUnique(allLogins, login);
+  
+      if (!isUnique) {
+        return showIsLoginNotUnique();
+      } else {
+        allLogins.push(login);
+        return showLoginAddedMessage();
+      }
+}
+
+const showInvalidMessage = () => {
+   return 'Ошибка! Логин должен быть от 4 до 16 символов';
+}
+
+const showIsLoginNotUnique = () => {
+   return 'Такой логин уже используется!';
+}
+
+const showLoginAddedMessage = () => {
+   return 'Логин успешно добавлен!';
+}
+
+/*
+ * Вызовы функции для проверки работоспособности твоей реализации.
+ */
+console.log(addLogin(logins, 'Ajax')); // 'Логин успешно добавлен!'
+console.log(addLogin(logins, 'robotGoogles')); // 'Такой логин уже используется!'
+console.log(addLogin(logins, 'Zod')); // 'Ошибка! Логин должен быть от 4 до 16 символов'
+console.log(addLogin(logins, 'jqueryisextremelyfast')); // 'Ошибка! Логин должен быть от 4 до 16 символов'
+
